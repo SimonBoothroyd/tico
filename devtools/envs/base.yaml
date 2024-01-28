@@ -1,0 +1,43 @@
+name: tico
+
+channels:
+  - conda-forge
+
+dependencies:
+
+  - python >=3.10
+  - pip
+
+  - pytorch
+  - networkx
+
+  - smee-base
+
+  # Dev / Testing
+  - openff-toolkit-base
+  - rdkit
+  - ambertools
+
+  - geometric
+
+  - scipy
+
+  - versioneer
+
+  - pre-commit
+  - ruff
+
+  - pytest
+  - pytest-mock
+  - pytest-cov
+  - codecov
+
+  # Docs
+  - mkdocs
+  - mkdocs-material
+  - mkdocs-gen-files
+  - mkdocs-literate-nav
+  - mkdocstrings
+  - mkdocstrings-python
+  - black
+  - mike
