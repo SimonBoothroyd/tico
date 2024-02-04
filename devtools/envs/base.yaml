@@ -17,6 +17,7 @@ dependencies:
   - openff-toolkit-base
   - rdkit
   - ambertools
+  - openmm
 
   - geometric
 
