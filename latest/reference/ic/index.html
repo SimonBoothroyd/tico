@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.7">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.8">
     
     
       
@@ -791,15 +791,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#tico.ic.DLC.enforce_constraints" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;enforce_constraints
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1123,15 +1114,6 @@
   <a href="#tico.ic.DLC.project_grad_x" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;project_grad_x
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tico.ic.DLC.enforce_constraints" class="md-nav__link">
-    <span class="md-ellipsis">
-      <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;enforce_constraints
     </span>
   </a>
   
@@ -2227,13 +2209,6 @@ internal coordinates.</p>
             <p>Project out the components of the internal coordinate gradient along the</p>
           </div>
         </li>
-        <li class="field-body">
-          <b><code><a class="autorefs autorefs-internal" title="tico.ic.DLC.enforce_constraints" href="#tico.ic.DLC.enforce_constraints">enforce_constraints</a></code></b>
-          –
-          <div class="doc-md-description">
-            <p>Modify cartesian coordinates to enforce any internal coordinate constraints.</p>
-          </div>
-        </li>
   </ul>
 
 
@@ -2750,168 +2725,6 @@ constrained degrees of freedom.</p>
 </div>
 
 
-<div class="doc doc-object doc-function">
-
-
-
-<h3 id="tico.ic.DLC.enforce_constraints" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>          <span class="doc doc-object-name doc-function-name">enforce_constraints</span>
-
-
-<a href="#tico.ic.DLC.enforce_constraints" class="headerlink" title="Permanent link">#</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">enforce_constraints</span><span class="p">(</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">coords_x</span><span class="p">:</span> <span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">,</span> <span class="n">tol</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="mf">1e-06</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tuple</span><span class="p">[</span><span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">,</span> <span class="n"><span title="torch.Tensor">Tensor</span></span><span class="p">,</span> <span class="n">bool</span><span class="p">]</span>
-</span></code></pre></div>
-
-  <div class="doc doc-contents ">
-  
-      <p>Modify cartesian coordinates to enforce any internal coordinate constraints.</p>
-
-
-
-  <p>Parameters:</p>
-  <ul>
-      <li class="field-body">
-        <b><code>coords_x</code></b>
-            (<code><span title="torch.Tensor">Tensor</span></code>)
-        –
-        <div class="doc-md-description">
-          <p>The coordinates with shape=(n_atoms, 3).</p>
-        </div>
-      </li>
-      <li class="field-body">
-        <b><code>tol</code></b>
-            (<code>float</code>, default:
-                <code>1e-06</code>
-)
-        –
-        <div class="doc-md-description">
-          <p>The tolerance for the constraint satisfaction.</p>
-        </div>
-      </li>
-  </ul>
-
-
-
-  <p>Returns:</p>
-  <ul>
-      <li class="field-body">
-            <code>tuple[<span title="torch.Tensor">Tensor</span>, <span title="torch.Tensor">Tensor</span>, bool]</code>
-        –
-        <div class="doc-md-description">
-          <p>The modified coordinates and internal coordinates, and a boolean indicating
-whether the conversion of cartesian to internal coordinates was successful.</p>
-      </div>
-      </li>
-  </ul>
-
-          <details class="quote">
-            <summary>Source code in <code>tico/ic.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-872">872</a></span>
-<span class="normal"><a href="#__codelineno-0-873">873</a></span>
-<span class="normal"><a href="#__codelineno-0-874">874</a></span>
-<span class="normal"><a href="#__codelineno-0-875">875</a></span>
-<span class="normal"><a href="#__codelineno-0-876">876</a></span>
-<span class="normal"><a href="#__codelineno-0-877">877</a></span>
-<span class="normal"><a href="#__codelineno-0-878">878</a></span>
-<span class="normal"><a href="#__codelineno-0-879">879</a></span>
-<span class="normal"><a href="#__codelineno-0-880">880</a></span>
-<span class="normal"><a href="#__codelineno-0-881">881</a></span>
-<span class="normal"><a href="#__codelineno-0-882">882</a></span>
-<span class="normal"><a href="#__codelineno-0-883">883</a></span>
-<span class="normal"><a href="#__codelineno-0-884">884</a></span>
-<span class="normal"><a href="#__codelineno-0-885">885</a></span>
-<span class="normal"><a href="#__codelineno-0-886">886</a></span>
-<span class="normal"><a href="#__codelineno-0-887">887</a></span>
-<span class="normal"><a href="#__codelineno-0-888">888</a></span>
-<span class="normal"><a href="#__codelineno-0-889">889</a></span>
-<span class="normal"><a href="#__codelineno-0-890">890</a></span>
-<span class="normal"><a href="#__codelineno-0-891">891</a></span>
-<span class="normal"><a href="#__codelineno-0-892">892</a></span>
-<span class="normal"><a href="#__codelineno-0-893">893</a></span>
-<span class="normal"><a href="#__codelineno-0-894">894</a></span>
-<span class="normal"><a href="#__codelineno-0-895">895</a></span>
-<span class="normal"><a href="#__codelineno-0-896">896</a></span>
-<span class="normal"><a href="#__codelineno-0-897">897</a></span>
-<span class="normal"><a href="#__codelineno-0-898">898</a></span>
-<span class="normal"><a href="#__codelineno-0-899">899</a></span>
-<span class="normal"><a href="#__codelineno-0-900">900</a></span>
-<span class="normal"><a href="#__codelineno-0-901">901</a></span>
-<span class="normal"><a href="#__codelineno-0-902">902</a></span>
-<span class="normal"><a href="#__codelineno-0-903">903</a></span>
-<span class="normal"><a href="#__codelineno-0-904">904</a></span>
-<span class="normal"><a href="#__codelineno-0-905">905</a></span>
-<span class="normal"><a href="#__codelineno-0-906">906</a></span>
-<span class="normal"><a href="#__codelineno-0-907">907</a></span>
-<span class="normal"><a href="#__codelineno-0-908">908</a></span>
-<span class="normal"><a href="#__codelineno-0-909">909</a></span>
-<span class="normal"><a href="#__codelineno-0-910">910</a></span>
-<span class="normal"><a href="#__codelineno-0-911">911</a></span>
-<span class="normal"><a href="#__codelineno-0-912">912</a></span>
-<span class="normal"><a href="#__codelineno-0-913">913</a></span>
-<span class="normal"><a href="#__codelineno-0-914">914</a></span>
-<span class="normal"><a href="#__codelineno-0-915">915</a></span>
-<span class="normal"><a href="#__codelineno-0-916">916</a></span>
-<span class="normal"><a href="#__codelineno-0-917">917</a></span>
-<span class="normal"><a href="#__codelineno-0-918">918</a></span>
-<span class="normal"><a href="#__codelineno-0-919">919</a></span>
-<span class="normal"><a href="#__codelineno-0-920">920</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-872"><a id="__codelineno-0-872" name="__codelineno-0-872"></a><span class="k">def</span> <span class="nf">enforce_constraints</span><span class="p">(</span>
-</span><span id="__span-0-873"><a id="__codelineno-0-873" name="__codelineno-0-873"></a>    <span class="bp">self</span><span class="p">,</span> <span class="n">coords_x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span>
-</span><span id="__span-0-874"><a id="__codelineno-0-874" name="__codelineno-0-874"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
-</span><span id="__span-0-875"><a id="__codelineno-0-875" name="__codelineno-0-875"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Modify cartesian coordinates to enforce any internal coordinate constraints.</span>
-</span><span id="__span-0-876"><a id="__codelineno-0-876" name="__codelineno-0-876"></a>
-</span><span id="__span-0-877"><a id="__codelineno-0-877" name="__codelineno-0-877"></a><span class="sd">    Args:</span>
-</span><span id="__span-0-878"><a id="__codelineno-0-878" name="__codelineno-0-878"></a><span class="sd">        coords_x: The coordinates with shape=(n_atoms, 3).</span>
-</span><span id="__span-0-879"><a id="__codelineno-0-879" name="__codelineno-0-879"></a><span class="sd">        tol: The tolerance for the constraint satisfaction.</span>
-</span><span id="__span-0-880"><a id="__codelineno-0-880" name="__codelineno-0-880"></a>
-</span><span id="__span-0-881"><a id="__codelineno-0-881" name="__codelineno-0-881"></a><span class="sd">    Returns:</span>
-</span><span id="__span-0-882"><a id="__codelineno-0-882" name="__codelineno-0-882"></a><span class="sd">        The modified coordinates and internal coordinates, and a boolean indicating</span>
-</span><span id="__span-0-883"><a id="__codelineno-0-883" name="__codelineno-0-883"></a><span class="sd">        whether the conversion of cartesian to internal coordinates was successful.</span>
-</span><span id="__span-0-884"><a id="__codelineno-0-884" name="__codelineno-0-884"></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="__span-0-885"><a id="__codelineno-0-885" name="__codelineno-0-885"></a>    <span class="n">iteration</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="__span-0-886"><a id="__codelineno-0-886" name="__codelineno-0-886"></a>
-</span><span id="__span-0-887"><a id="__codelineno-0-887" name="__codelineno-0-887"></a>    <span class="n">constr_to_ic_idx</span> <span class="o">=</span> <span class="n">_match_constr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">idxs</span><span class="p">)</span>
-</span><span id="__span-0-888"><a id="__codelineno-0-888" name="__codelineno-0-888"></a>
-</span><span id="__span-0-889"><a id="__codelineno-0-889" name="__codelineno-0-889"></a>    <span class="n">dq_norm</span> <span class="o">=</span> <span class="mf">0.0</span>
-</span><span id="__span-0-890"><a id="__codelineno-0-890" name="__codelineno-0-890"></a>    <span class="n">dq_norm_best</span><span class="p">,</span> <span class="n">soln_best</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
-</span><span id="__span-0-891"><a id="__codelineno-0-891" name="__codelineno-0-891"></a>
-</span><span id="__span-0-892"><a id="__codelineno-0-892" name="__codelineno-0-892"></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-</span><span id="__span-0-893"><a id="__codelineno-0-893" name="__codelineno-0-893"></a>        <span class="n">dq</span> <span class="o">=</span> <span class="n">smee</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">)</span>
-</span><span id="__span-0-894"><a id="__codelineno-0-894" name="__codelineno-0-894"></a>
-</span><span id="__span-0-895"><a id="__codelineno-0-895" name="__codelineno-0-895"></a>        <span class="c1"># because of how we construct v, the first n_v columns should be the</span>
-</span><span id="__span-0-896"><a id="__codelineno-0-896" name="__codelineno-0-896"></a>        <span class="c1"># projected constrained DoF</span>
-</span><span id="__span-0-897"><a id="__codelineno-0-897" name="__codelineno-0-897"></a>        <span class="n">constr_delta</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_constr_delta</span><span class="p">(</span><span class="n">coords_x</span><span class="p">)</span>
-</span><span id="__span-0-898"><a id="__codelineno-0-898" name="__codelineno-0-898"></a>
-</span><span id="__span-0-899"><a id="__codelineno-0-899" name="__codelineno-0-899"></a>        <span class="n">dq</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">constr_delta</span><span class="p">)]</span> <span class="o">=</span> <span class="n">constr_delta</span>
-</span><span id="__span-0-900"><a id="__codelineno-0-900" name="__codelineno-0-900"></a>        <span class="n">dq</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">constr_delta</span><span class="p">)]</span> <span class="o">/=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">[</span>
-</span><span id="__span-0-901"><a id="__codelineno-0-901" name="__codelineno-0-901"></a>            <span class="n">constr_to_ic_idx</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">constr_delta</span><span class="p">)))</span>
-</span><span id="__span-0-902"><a id="__codelineno-0-902" name="__codelineno-0-902"></a>        <span class="p">]</span>
-</span><span id="__span-0-903"><a id="__codelineno-0-903" name="__codelineno-0-903"></a>
-</span><span id="__span-0-904"><a id="__codelineno-0-904" name="__codelineno-0-904"></a>        <span class="n">dq_norm_prev</span> <span class="o">=</span> <span class="n">dq_norm</span>
-</span><span id="__span-0-905"><a id="__codelineno-0-905" name="__codelineno-0-905"></a>        <span class="n">dq_norm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">dq</span><span class="p">)</span>
-</span><span id="__span-0-906"><a id="__codelineno-0-906" name="__codelineno-0-906"></a>
-</span><span id="__span-0-907"><a id="__codelineno-0-907" name="__codelineno-0-907"></a>        <span class="n">soln</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dq_to_x</span><span class="p">(</span><span class="n">coords_x</span><span class="p">,</span> <span class="n">dq</span><span class="p">,</span> <span class="n">enforce_constr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</span><span id="__span-0-908"><a id="__codelineno-0-908" name="__codelineno-0-908"></a>        <span class="n">coords_x</span> <span class="o">=</span> <span class="n">soln</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span id="__span-0-909"><a id="__codelineno-0-909" name="__codelineno-0-909"></a>
-</span><span id="__span-0-910"><a id="__codelineno-0-910" name="__codelineno-0-910"></a>        <span class="k">if</span> <span class="n">dq_norm_best</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">dq_norm</span> <span class="o">&lt;</span> <span class="n">dq_norm_best</span><span class="p">:</span>
-</span><span id="__span-0-911"><a id="__codelineno-0-911" name="__codelineno-0-911"></a>            <span class="n">dq_norm_best</span><span class="p">,</span> <span class="n">soln_best</span> <span class="o">=</span> <span class="n">dq_norm</span><span class="p">,</span> <span class="n">soln</span>
-</span><span id="__span-0-912"><a id="__codelineno-0-912" name="__codelineno-0-912"></a>
-</span><span id="__span-0-913"><a id="__codelineno-0-913" name="__codelineno-0-913"></a>        <span class="k">if</span> <span class="n">dq_norm</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
-</span><span id="__span-0-914"><a id="__codelineno-0-914" name="__codelineno-0-914"></a>            <span class="k">return</span> <span class="n">soln</span>
-</span><span id="__span-0-915"><a id="__codelineno-0-915" name="__codelineno-0-915"></a>
-</span><span id="__span-0-916"><a id="__codelineno-0-916" name="__codelineno-0-916"></a>        <span class="k">if</span> <span class="n">iteration</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">dq_norm</span> <span class="o">&gt;</span> <span class="n">dq_norm_prev</span><span class="p">:</span>
-</span><span id="__span-0-917"><a id="__codelineno-0-917" name="__codelineno-0-917"></a>            <span class="n">_LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;constraint satisfaction failed to converge&quot;</span><span class="p">)</span>
-</span><span id="__span-0-918"><a id="__codelineno-0-918" name="__codelineno-0-918"></a>            <span class="k">return</span> <span class="n">soln_best</span>
-</span><span id="__span-0-919"><a id="__codelineno-0-919" name="__codelineno-0-919"></a>
-</span><span id="__span-0-920"><a id="__codelineno-0-920" name="__codelineno-0-920"></a>        <span class="n">iteration</span> <span class="o">+=</span> <span class="mi">1</span>
-</span></code></pre></div></td></tr></table></div>
-          </details>
-  </div>
-
-</div>
-
-
 
   </div>
 
@@ -3027,7 +2840,7 @@ whether the conversion of cartesian to internal coordinates was successful.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "search.highlight", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.caa56a14.min.js"></script>
+      <script src="../../assets/javascripts/bundle.8fd75fb4.min.js"></script>
       
         <script src="../../javascripts/mathjax.js"></script>
       
