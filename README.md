@@ -64,9 +64,7 @@ mol.generate_conformers(n_conformers=1)
 bond_idxs = torch.tensor(
     [[bond.atom1_index, bond.atom2_index] for bond in mol.bonds]
 )
-atomic_nums = torch.tensor([atom.atomic_number for atom in mol.atoms])
-
-coords_x = torch.tensor(mol.conformers[0].m_as("bohr").tolist()).double()
+coords = torch.tensor(mol.conformers[0].m_as("bohr")).double()
 ```
 
 An internal coordinate representation of the molecule can be created using the `tico.ic`:
@@ -75,14 +73,14 @@ An internal coordinate representation of the molecule can be created using the `
 import tico.ic
 
 # Create a primitive internal coordinates representation
-ic = tico.ic.RIC.from_coords(coords_x, bond_idxs)
+ic = tico.ic.RIC.from_coords(coords, bond_idxs)
 # Or a usually more efficient delocalized internal coordinates representation
-ic = tico.ic.DLC.from_coords(coords_x, bond_idxs)
+ic = tico.ic.DLC.from_coords(coords, bond_idxs)
 
 # If using the delocalized internal coordinates, optional constraints can be added.
 # For example, to fix the distance between atoms 0 and 1 to 2.0 bohr:
 constr = {tico.ic.ICType.DISTANCE: (torch.tensor([[0, 1]]), torch.tensor([2.0]))}
-ic = tico.ic.DLC.from_coords(coords_x, bond_idxs, constr)
+ic = tico.ic.DLC.from_coords(coords, bond_idxs, constr)
 ```
 
 An example energy function that uses OpenMM may look like:
@@ -123,10 +121,12 @@ The optimization can then be performed using:
 ```python
 import tico.opt
 
-history, converged = tico.opt.optimize(coords_x, ic, energy_fn, atomic_nums)
+atomic_nums = torch.tensor([atom.atomic_number for atom in mol.atoms])
+
+history, converged = tico.opt.optimize(coords, ic, energy_fn, atomic_nums)
 assert converged
 
-coords_x_final = history[-1].coords_x
+coords_final = history[-1].coords
 ```
 
 ## License

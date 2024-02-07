@@ -25,9 +25,9 @@ class Step(typing.NamedTuple):
     """The outputs of step in the optimization process."""
 
     coords_x: torch.Tensor
-    """The cartesian coordinates."""
+    """The cartesian coordinates [a0]."""
     grad_x: torch.Tensor
-    """The gradients in cartesian coordinates."""
+    """The gradients [Eh/a0] in cartesian coordinates."""
 
     coords_q: torch.Tensor
     """The internal coordinates."""
@@ -41,13 +41,13 @@ class ConvergenceCriteria(typing.TypedDict):
     energy: float
     """The energy [Eh] convergence criteria."""
     rms_grad: float
-    """The root mean square of the gradients [Eh/Bohr] convergence criteria."""
+    """The root mean square of the gradients [Eh/a0] convergence criteria."""
     max_grad: float
-    """The maximum gradient [Eh/Bohr] convergence criteria."""
+    """The maximum gradient [Eh/a0] convergence criteria."""
     rms_disp: float
-    """The root mean square of the displacements [Bohr] convergence criteria."""
+    """The root mean square of the displacements [a0] convergence criteria."""
     max_disp: float
-    """The maximum displacement [Bohr] convergence criteria."""
+    """The maximum displacement [a0] convergence criteria."""
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -94,12 +94,12 @@ class Params:
     """The minimum eigenvalue of the Hessian."""
 
     trust: float = 0.1 * _ANGSTROM_TO_BOHR
-    """The initial trust radius. This will be adjusted during the optimization
+    """The initial trust radius [a0]. This will be adjusted during the optimization
     process."""
     trust_min: float = 1.2e-3 * _ANGSTROM_TO_BOHR
-    """The lower bound of the trust radius."""
+    """The lower bound of the trust radius [a0]."""
     trust_max: float = 0.3 * _ANGSTROM_TO_BOHR
-    """The upper bound of the trust radius."""
+    """The upper bound of the trust radius [a0]."""
 
     criteria: ConvergenceCriteria = dataclasses.field(
         default_factory=lambda: {**CONVERGENCE_CRITERIA["GAU"]}
@@ -346,11 +346,11 @@ def optimize(
     """Optimize the geometry of a molecule.
 
     Args:
-        coords_x: The initial cartesian coordinates.
+        coords_x: The initial cartesian coordinates [a0].
         ic: The internal coordinate representation of the molecule.
         energy_fn: A function that computes the energy and gradients of the molecule.
-            It should take the cartesian coordinates and return the energy and
-            gradients in atomic units.
+            It should take the cartesian coordinates and return the energy [Eh] and
+            gradients [Eh/a0] in atomic units.
         atomic_nums: The atomic numbers of the atoms in the molecule.
         params: The parameters for the optimization.
 
