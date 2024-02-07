@@ -1272,7 +1272,7 @@
             (<code><span title="torch.Tensor">Tensor</span></code>)
         –
         <div class="doc-md-description">
-          <p>The cartesian coordinates.</p>
+          <p>The cartesian coordinates [a0].</p>
         </div>
       </li>
       <li class="field-body">
@@ -1280,7 +1280,7 @@
             (<code><span title="torch.Tensor">Tensor</span></code>)
         –
         <div class="doc-md-description">
-          <p>The gradients in cartesian coordinates.</p>
+          <p>The gradients [Eh/a0] in cartesian coordinates.</p>
         </div>
       </li>
       <li class="field-body">
@@ -1330,7 +1330,7 @@
 
   <div class="doc doc-contents ">
   
-      <p>The cartesian coordinates.</p>
+      <p>The cartesian coordinates [a0].</p>
   </div>
 
 </div>
@@ -1353,7 +1353,7 @@
 
   <div class="doc doc-contents ">
   
-      <p>The gradients in cartesian coordinates.</p>
+      <p>The gradients [Eh/a0] in cartesian coordinates.</p>
   </div>
 
 </div>
@@ -1454,7 +1454,7 @@
             (<code>float</code>)
         –
         <div class="doc-md-description">
-          <p>The root mean square of the gradients [Eh/Bohr] convergence criteria.</p>
+          <p>The root mean square of the gradients [Eh/a0] convergence criteria.</p>
         </div>
       </li>
       <li class="field-body">
@@ -1462,7 +1462,7 @@
             (<code>float</code>)
         –
         <div class="doc-md-description">
-          <p>The maximum gradient [Eh/Bohr] convergence criteria.</p>
+          <p>The maximum gradient [Eh/a0] convergence criteria.</p>
         </div>
       </li>
       <li class="field-body">
@@ -1470,7 +1470,7 @@
             (<code>float</code>)
         –
         <div class="doc-md-description">
-          <p>The root mean square of the displacements [Bohr] convergence criteria.</p>
+          <p>The root mean square of the displacements [a0] convergence criteria.</p>
         </div>
       </li>
       <li class="field-body">
@@ -1478,7 +1478,7 @@
             (<code>float</code>)
         –
         <div class="doc-md-description">
-          <p>The maximum displacement [Bohr] convergence criteria.</p>
+          <p>The maximum displacement [a0] convergence criteria.</p>
         </div>
       </li>
   </ul>
@@ -1535,7 +1535,7 @@
 
   <div class="doc doc-contents ">
   
-      <p>The root mean square of the gradients [Eh/Bohr] convergence criteria.</p>
+      <p>The root mean square of the gradients [Eh/a0] convergence criteria.</p>
   </div>
 
 </div>
@@ -1558,7 +1558,7 @@
 
   <div class="doc doc-contents ">
   
-      <p>The maximum gradient [Eh/Bohr] convergence criteria.</p>
+      <p>The maximum gradient [Eh/a0] convergence criteria.</p>
   </div>
 
 </div>
@@ -1581,7 +1581,7 @@
 
   <div class="doc doc-contents ">
   
-      <p>The root mean square of the displacements [Bohr] convergence criteria.</p>
+      <p>The root mean square of the displacements [a0] convergence criteria.</p>
   </div>
 
 </div>
@@ -1604,7 +1604,7 @@
 
   <div class="doc doc-contents ">
   
-      <p>The maximum displacement [Bohr] convergence criteria.</p>
+      <p>The maximum displacement [a0] convergence criteria.</p>
   </div>
 
 </div>
@@ -1669,7 +1669,7 @@
             (<code>float</code>)
         –
         <div class="doc-md-description">
-          <p>The initial trust radius. This will be adjusted during the optimization</p>
+          <p>The initial trust radius [a0]. This will be adjusted during the optimization</p>
         </div>
       </li>
       <li class="field-body">
@@ -1677,7 +1677,7 @@
             (<code>float</code>)
         –
         <div class="doc-md-description">
-          <p>The lower bound of the trust radius.</p>
+          <p>The lower bound of the trust radius [a0].</p>
         </div>
       </li>
       <li class="field-body">
@@ -1685,7 +1685,7 @@
             (<code>float</code>)
         –
         <div class="doc-md-description">
-          <p>The upper bound of the trust radius.</p>
+          <p>The upper bound of the trust radius [a0].</p>
         </div>
       </li>
       <li class="field-body">
@@ -1776,7 +1776,7 @@
 
   <div class="doc doc-contents ">
   
-      <p>The initial trust radius. This will be adjusted during the optimization
+      <p>The initial trust radius [a0]. This will be adjusted during the optimization
 process.</p>
   </div>
 
@@ -1801,7 +1801,7 @@ process.</p>
 
   <div class="doc doc-contents ">
   
-      <p>The lower bound of the trust radius.</p>
+      <p>The lower bound of the trust radius [a0].</p>
   </div>
 
 </div>
@@ -1825,7 +1825,7 @@ process.</p>
 
   <div class="doc doc-contents ">
   
-      <p>The upper bound of the trust radius.</p>
+      <p>The upper bound of the trust radius [a0].</p>
   </div>
 
 </div>
@@ -1902,7 +1902,7 @@ process.</p>
             (<code><span title="torch.Tensor">Tensor</span></code>)
         –
         <div class="doc-md-description">
-          <p>The initial cartesian coordinates.</p>
+          <p>The initial cartesian coordinates [a0].</p>
         </div>
       </li>
       <li class="field-body">
@@ -1919,8 +1919,8 @@ process.</p>
         –
         <div class="doc-md-description">
           <p>A function that computes the energy and gradients of the molecule.
-It should take the cartesian coordinates and return the energy and
-gradients in atomic units.</p>
+It should take the cartesian coordinates and return the energy [Eh] and
+gradients [Eh/a0] in atomic units.</p>
         </div>
       </li>
       <li class="field-body">
@@ -2064,11 +2064,11 @@ or not.</p>
 </span><span id="__span-0-346"><a id="__codelineno-0-346" name="__codelineno-0-346"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Optimize the geometry of a molecule.</span>
 </span><span id="__span-0-347"><a id="__codelineno-0-347" name="__codelineno-0-347"></a>
 </span><span id="__span-0-348"><a id="__codelineno-0-348" name="__codelineno-0-348"></a><span class="sd">    Args:</span>
-</span><span id="__span-0-349"><a id="__codelineno-0-349" name="__codelineno-0-349"></a><span class="sd">        coords_x: The initial cartesian coordinates.</span>
+</span><span id="__span-0-349"><a id="__codelineno-0-349" name="__codelineno-0-349"></a><span class="sd">        coords_x: The initial cartesian coordinates [a0].</span>
 </span><span id="__span-0-350"><a id="__codelineno-0-350" name="__codelineno-0-350"></a><span class="sd">        ic: The internal coordinate representation of the molecule.</span>
 </span><span id="__span-0-351"><a id="__codelineno-0-351" name="__codelineno-0-351"></a><span class="sd">        energy_fn: A function that computes the energy and gradients of the molecule.</span>
-</span><span id="__span-0-352"><a id="__codelineno-0-352" name="__codelineno-0-352"></a><span class="sd">            It should take the cartesian coordinates and return the energy and</span>
-</span><span id="__span-0-353"><a id="__codelineno-0-353" name="__codelineno-0-353"></a><span class="sd">            gradients in atomic units.</span>
+</span><span id="__span-0-352"><a id="__codelineno-0-352" name="__codelineno-0-352"></a><span class="sd">            It should take the cartesian coordinates and return the energy [Eh] and</span>
+</span><span id="__span-0-353"><a id="__codelineno-0-353" name="__codelineno-0-353"></a><span class="sd">            gradients [Eh/a0] in atomic units.</span>
 </span><span id="__span-0-354"><a id="__codelineno-0-354" name="__codelineno-0-354"></a><span class="sd">        atomic_nums: The atomic numbers of the atoms in the molecule.</span>
 </span><span id="__span-0-355"><a id="__codelineno-0-355" name="__codelineno-0-355"></a><span class="sd">        params: The parameters for the optimization.</span>
 </span><span id="__span-0-356"><a id="__codelineno-0-356" name="__codelineno-0-356"></a>
