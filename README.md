@@ -92,25 +92,6 @@ import openmm
 import openmm.unit
 import torch
 
-def create_energy_fn(context: openmm.Context):
-    def energy_fn(coords):
-        coords = coords.numpy().reshape(-1, 3) * openmm.unit.bohr
-        context.setPositions(coords)
-
-        state = context.getState(getEnergy=True, getForces=True)
-
-        energy = state.getPotentialEnergy() / openmm.unit.AVOGADRO_CONSTANT_NA
-        gradient = -state.getForces(asNumpy=True) / openmm.unit.AVOGADRO_CONSTANT_NA
-
-        energy = energy.value_in_unit(openmm.unit.hartree)
-        gradient = gradient.value_in_unit(
-            openmm.unit.hartree / openmm.unit.bohr
-        ).flatten()
-
-        return torch.tensor(energy), torch.tensor(gradient)
-
-    return energy_fn
-
 system = ff.create_openmm_system(mol.to_topology())
 
 context = openmm.Context(
@@ -119,7 +100,19 @@ context = openmm.Context(
     openmm.Platform.getPlatformByName("Reference"),
 )
 
-energy_fn = create_energy_fn(context)
+def energy_fn(coords):
+    coords = coords.numpy().reshape(-1, 3) * openmm.unit.bohr
+    context.setPositions(coords)
+
+    state = context.getState(getEnergy=True, getForces=True)
+
+    energy = state.getPotentialEnergy() / openmm.unit.AVOGADRO_CONSTANT_NA
+    gradient = -state.getForces(asNumpy=True) / openmm.unit.AVOGADRO_CONSTANT_NA
+
+    energy = energy.value_in_unit(openmm.unit.hartree)
+    gradient = gradient.value_in_unit(openmm.unit.hartree / openmm.unit.bohr).flatten()
+
+    return torch.tensor(energy), torch.tensor(gradient)
 ```
 
 where here the actual energy function is wrapped in a function that takes an

@@ -229,15 +229,19 @@ def _line_search(
     assert max_trials >= 1
 
     @functools.lru_cache
-    def evaluate(trial: float, target_dx: float) -> tuple[float, bool]:
-        if trial == 0.0:
-            return -trust, False
-
+    def evaluate_dx(trial: float) -> tuple[torch.Tensor, bool]:
         dq_trial = _find_dq(trial, step_size, coords_x, grad_q, hess_q, ic)
 
         coords_x_new, _, q_converged = ic.dq_to_x(coords_x, dq_trial)
         dx = tico.utils.compute_rmsd(coords_x_new, coords_x)[0]
 
+        return dx, q_converged
+
+    def evaluate(trial: float, target_dx: float) -> tuple[float, bool]:
+        if trial == 0.0:
+            return -trust, False
+
+        dx, q_converged = evaluate_dx(trial)
         return (dx - target_dx), q_converged
 
     dq_norm = torch.linalg.norm(dq).detach().cpu().item()
@@ -247,7 +251,7 @@ def _line_search(
 
     for i in range(max_trials):
         dq_norm, trials, converged = tico.utils.brent(
-            evaluate, 0.0, dq_norm, target, cvg=0.1 * _ANGSTROM_TO_BOHR, args=(target,)
+            evaluate, 0.0, dq_norm, target, cvg=0.1, args=(target,)
         )
 
         best_trials = sorted(
@@ -382,8 +386,8 @@ def optimize(
         dq, _ = _compute_dq(step_size, coords_x, grad_q, hess_q, ic)
         coords_x_new, coords_q_new, q_converged = ic.dq_to_x(coords_x, dq)
 
-        if tico.utils.compute_rmsd(coords_x_new, coords_x)[0] > 1.1 * params.trust:
-            dq = _line_search(params.trust, step_size, coords_x, grad_q, hess_q, dq, ic)
+        if tico.utils.compute_rmsd(coords_x_new, coords_x)[0] > 1.1 * trust:
+            dq = _line_search(trust, step_size, coords_x, grad_q, hess_q, dq, ic)
             coords_x_new, coords_q_new, q_converged = ic.dq_to_x(coords_x, dq)
 
         energy_new, grad_x_new = energy_fn(coords_x_new)

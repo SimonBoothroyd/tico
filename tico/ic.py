@@ -846,7 +846,7 @@ class DLC(IC):
         constr_delta = self.compute_constr_delta(coords_x)
 
         if enforce_constr and torch.linalg.norm(constr_delta) >= constr_tol:
-            return self.enforce_constraints(coords_x, constr_tol)
+            return self._apply_constraints(coords_x, constr_tol)
 
         return coords_x, coords_q, q_converged
 
@@ -869,7 +869,7 @@ class DLC(IC):
 
         return torch.linalg.multi_dot([b_matrix.T, grad_q])
 
-    def enforce_constraints(
+    def _apply_constraints(
         self, coords_x: torch.Tensor, tol: float = 1e-6
     ) -> tuple[torch.Tensor, torch.Tensor, bool]:
         """Modify cartesian coordinates to enforce any internal coordinate constraints.
