@@ -1,7 +1,7 @@
 """Compute internal coordinate representations of molecules.
 
 Notes:
-    * This module is heavily inspired off of the ``internal`` module of ``geomeTRIC``.
+    * This module is heavily based off of the ``internal`` module of ``geomeTRIC``.
       See the LICENSE-3RD-PARTY for license information.
 """
 import abc
@@ -333,7 +333,15 @@ def _match_constr(constr: ConstraintDict, ic_idxs: ICDict) -> torch.Tensor:
             count += len(ic_idxs[ic_type])
             continue
 
-        match = torch.all(constr[ic_type][0][:, None] == ic_idxs[ic_type], dim=2)
+        ic_idxs_flipped = torch.flip(ic_idxs[ic_type], dims=(-1,))
+
+        match = torch.all(
+            (
+                (constr[ic_type][0][:, None] == ic_idxs[ic_type])
+                | (constr[ic_type][0][:, None] == ic_idxs_flipped)
+            ),
+            dim=2,
+        )
 
         match_idxs = torch.where(
             torch.any(match, dim=1), torch.argmax(match.int(), dim=1), -1
@@ -853,8 +861,8 @@ class DLC(IC):
     def project_grad_x(
         self, coords_x: torch.Tensor, grad_x: torch.Tensor
     ) -> torch.Tensor:
-        """Project out the components of the internal coordinate gradient along the
-        constrained degrees of freedom."""
+        """Project out the components of the gradient along the constrained degrees of
+        freedom."""
 
         if self.constr is None:
             return grad_x
@@ -872,7 +880,7 @@ class DLC(IC):
     def _apply_constraints(
         self, coords_x: torch.Tensor, tol: float = 1e-6
     ) -> tuple[torch.Tensor, torch.Tensor, bool]:
-        """Modify cartesian coordinates to enforce any internal coordinate constraints.
+        """Attempt to take steps in ICs to enforce any internal coordinate constraints.
 
         Args:
             coords_x: The coordinates with shape=(n_atoms, 3).

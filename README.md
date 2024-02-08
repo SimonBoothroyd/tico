@@ -46,9 +46,9 @@ mamba install -c conda-forge tico
 
 ## Getting Started
 
-To optimize the geometry of a molecule, you can use `tico.opt.optimize`. This takes as
-input and initial set of cartesian coordinates, and a function that returns the energy
-and gradient of the molecule at a given coordinate.
+To geometry of a molecule can be optimized using the `tico.opt.optimize` function. It
+takes as input and initial set of cartesian coordinates, and a function that returns
+the energy and gradient of the molecule at a given set of coordinates.
 
 Creating a molecule to optimize can be easily done using the `openff.toolkit` package:
 
@@ -67,7 +67,8 @@ bond_idxs = torch.tensor(
 coords = torch.tensor(mol.conformers[0].m_as("bohr")).double()
 ```
 
-An internal coordinate representation of the molecule can be created using the `tico.ic`:
+An internal coordinate representation of the molecule can then be created using the
+helpers in the `tico.ic` module:
 
 ```python
 import tico.ic
@@ -98,9 +99,9 @@ context = openmm.Context(
     openmm.Platform.getPlatformByName("Reference"),
 )
 
-def energy_fn(coords):
-    coords = coords.numpy().reshape(-1, 3) * openmm.unit.bohr
-    context.setPositions(coords)
+def energy_fn(c):
+    c = c.numpy().reshape(-1, 3) * openmm.unit.bohr
+    context.setPositions(c)
 
     state = context.getState(getEnergy=True, getForces=True)
 
@@ -113,9 +114,6 @@ def energy_fn(coords):
     return torch.tensor(energy), torch.tensor(gradient)
 ```
 
-where here the actual energy function is wrapped in a function that takes an
-`openmm.Context` as input for convenience.
-
 The optimization can then be performed using:
 
 ```python
@@ -127,6 +125,49 @@ history, converged = tico.opt.optimize(coords, ic, energy_fn, atomic_nums)
 assert converged
 
 coords_final = history[-1].coords
+```
+
+The `tico.td` module contains additional helpers for performing torsion scans around
+given bonds:
+
+```python
+import tico.td
+
+# scan using torsiondrive with wavefront propagation
+params = tico.td.Params(driver=tico.td.WFP())
+# OR for faster (but likely higher energy structures), just do a linear scan
+params = tico.td.Params(driver=tico.td.Simple())
+
+results = tico.td.torsion_drive(
+    coords, bond_idxs, dihedral, energy_fn, atomic_nums, params
+)
+```
+
+The energies of the torsion scan can be easily plotted:
+
+```python
+
+angles = sorted(results)
+energies = [results[angle][1] for angle in angles]
+
+from matplotlib import pyplot
+
+pyplot.plot(angles, energies)
+pyplot.xlabel("Angle [deg]")
+pyplot.ylabel("Energy [Eh]")
+pyplot.legend()
+pyplot.show()
+```
+
+and the optimized geometries can be extracted:
+
+```python
+import openff.units
+
+mol._conformers = [
+    coords.numpy() * openff.units.unit.bohr for coords, _ in results.values()
+]
+mol.to_file("td.xyz", "XYZ")
 ```
 
 ## License

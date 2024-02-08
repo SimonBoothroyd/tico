@@ -1,7 +1,7 @@
 """Optimize molecule geometrics in internal coordinates.
 
 Notes:
-    * This module is heavily inspired off of the ``optimize`` and ``step`` modules of
+    * This module is heavily based off of the ``optimize`` and ``step`` modules of
       ``geomeTRIC``. See the LICENSE-3RD-PARTY for license information.
 """
 import dataclasses

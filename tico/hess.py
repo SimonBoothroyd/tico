@@ -1,5 +1,9 @@
 """Utilities for approximating Hessian matrices.
 
+Notes:
+    * This module is heavily based off of the ``hessian`` module of ``geomeTRIC``.
+      See the LICENSE-3RD-PARTY for license information.
+
 References:
     1. Schlegel, Theor. Chim. Acta, 66, 333 (1984)
 """
@@ -83,7 +87,13 @@ def _guess_hess_out_of_plane(
 def guess_hess_q(
     coords: torch.Tensor, ic_idxs: tico.ic.ICDict, atomic_nums: torch.Tensor
 ) -> torch.Tensor:
-    """Build a guess Hessian that roughly follows Schlegel's guidelines."""
+    """Build a guess Hessian that roughly follows Schlegel's guidelines.
+
+    Args:
+        coords: The cartesian coordinates [a0].
+        ic_idxs: The indices of atoms that define the internal coordinates.
+        atomic_nums: The atomic numbers of the atoms in the molecule.
+    """
 
     hess_diag = []
 
@@ -116,6 +126,17 @@ def update_hess_q(
     ic: tico.ic.IC,
     max_updates: int = 1,
 ) -> torch.Tensor:
+    """Approximately update the Hessian matrix using the history of optimization steps.
+
+    Args:
+        hess_q: The current Hessian matrix.
+        history: The history of optimization steps.
+        ic: The internal coordinate system.
+        max_updates: The maximum number of previous steps to use for the update.
+
+    Returns:
+        The updated Hessian matrix.
+    """
     if len(history) < 2:
         return hess_q
 

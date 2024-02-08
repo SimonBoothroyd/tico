@@ -13,6 +13,8 @@ dependencies:
 
   - smee-base
 
+  - torsiondrive
+
   # Dev / Testing
   - openff-toolkit-base
   - rdkit
