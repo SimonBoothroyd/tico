@@ -56,7 +56,7 @@ class Simple:
 class Params:
     """Parameters for the optimization process."""
 
-    driver: WFP | Simple = dataclasses.field(default_factory=Simple)
+    driver: WFP | Simple = dataclasses.field(default_factory=WFP)
     """The algorithm to use for the torsion drive."""
 
     grid_spacing: int = 15
